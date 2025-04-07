@@ -2,8 +2,8 @@
   <div class="game-container">
     <!-- 添加错误提示 -->
     <div v-if="errorMessage" class="error-message">
-      {{ errorMessage }}
-      <button @click="retryGame">Retry</button>
+      {{ t('error') }}
+      <button @click="retryGame">{{ t('retry') }}</button>
     </div>
     <!-- 摄像头容器 -->
     <div class="camera-container" :class="{ 'hidden': !shouldShowCamera }">
@@ -43,32 +43,32 @@
     <!-- 游戏状态显示 -->
     <div class="game-stats">
       <div class="stat-item score">
-        <span class="label">SCORE:</span>
+        <span class="label">{{ t('score') }}:</span>
         <span class="value">{{ score }}</span>
       </div>
       <div class="stat-item lives">
-        <span class="label">LIVES:</span>
+        <span class="label">{{ t('lives') }}:</span>
         <span class="value">{{ lives }}</span>
       </div>
       <div class="stat-item balloons">
-        <span class="label">BALLOONS:</span>
+        <span class="label">{{ t('balloons') }}:</span>
         <span class="value">{{ balloonCount }}/{{ maxBalloons }}</span>
       </div>
     </div>
     <!-- 添加游戏开始/结束界面 -->
     <div v-if="!isPlaying && !countdownVisible && !calibrating" class="game-overlay">
       <div class="game-menu">
-        <h2>{{ gameOver ? 'Game Over!' : 'Balloon Master' }}</h2>
-        <p v-if="gameOver">Final Score: {{ score }}</p>
+        <h2>{{ gameOver ? t('gameOver') : t('title') }}</h2>
+        <p v-if="gameOver">{{ t('finalScore') }}:{{ score }}</p>
         <!-- 游戏结束时显示两个按钮 -->
         <div v-if="gameOver" class="game-over-buttons">
-          <button @click="startGame">Play Again</button>
-          <button @click="backToMenu" class="back-button">Back to Menu</button>
+          <button @click="startGame">{{ t('retry') }}</button>
+          <button @click="backToMenu" class="back-button">{{ t('back') }}</button>
         </div>
         <!-- 游戏未开始时显示难度选择和返回按钮 -->
         <div v-else>
           <div class="difficulty-select">
-            <h3>Select Difficulty:</h3>
+            <h3>{{ t('selectDifficulty') }}</h3>
             <div class="difficulty-buttons">
               <button 
                 v-for="(config, diff) in GAME_CONFIG.difficulties" 
@@ -76,14 +76,14 @@
                 :class="{ active: selectedDifficulty === diff }"
                 @click="selectedDifficulty = diff"
               >
-                {{ diff.charAt(0).toUpperCase() + diff.slice(1) }}
+              {{ t(diff) }}
               </button>
             </div>
           </div>
           <div class="start-buttons">
-            <button class="start-button" @click="startGame">Start Game</button>
+            <button class="start-button" @click="startGame">{{ t('start') }}</button>
             <!-- 添加返回主页按钮 -->
-            <button class="start-button" @click="backToMain">Back to Home</button>
+            <button class="start-button" @click="backToMain">{{ t('back') }}</button>
           </div>
         </div>
       </div>
@@ -95,12 +95,13 @@
     <!-- 添加校准倒计时显示 -->
     <div v-if="calibrating" class="calibration-overlay">
       <div class="calibration-message">
-        Please maintain a standing position {{ calibrationTimeLeft }}s
+        {{ t('calibrate') }} {{ calibrationTimeLeft }}s
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import { t } from '../language/language.js'
 import { ref, computed, reactive, onMounted, onUnmounted } from 'vue'
 import PoseDetection from './PoseDetection.vue'
 import Balloon from './Balloon.vue'
@@ -190,8 +191,8 @@ const legTimers = reactive({
 })
 // 音效系统 - 只保留必要的音效
 const sounds = reactive({
-  pop: new Audio('/BubblePopKungFu/Assets/pop_sound.mp3'),  // 气球爆炸音效
-  miss: new Audio('/BubblePopKungFu/Assets/splash.wav')      // 失败音效
+  pop: new Audio('./Assets/pop_sound.mp3'),  // 气球爆炸音效
+  miss: new Audio('./Assets/splash.wav')      // 失败音效
 })
 // 初始化音效
 const initSounds = () => {
@@ -228,7 +229,7 @@ onUnmounted(() => {
   })
 })
 // 添加背景音乐
-const bgMusic = new Audio('/BubblePopKungFu/Assets/kung_fu_music.mp3')
+const bgMusic = new Audio('./Assets/kung_fu_music.mp3')
 bgMusic.loop = true  // 循环播
 bgMusic.volume = 0.5 // 设置音量
 // 游戏循
@@ -268,7 +269,7 @@ const startGame = async () => {
     
   } catch (error) {
     console.error('Game start error:', error)
-    errorMessage.value = 'Game start failed, please try again'
+    errorMessage.value = t('error')
   }
 }
 // 添加气球生成状态
@@ -640,9 +641,19 @@ const checkGameEnd = () => {
 }
 
 // 添加返回主页函数
+// const backToMain = () => {
+//   window.location.href = 'https://uoabiolab.github.io/GameIndex/'
+// }
+
 const backToMain = () => {
-  window.location.href = 'https://uoabiolab.github.io/GameIndex/'
+  const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  const mainPage = isLocal
+    ? '/GameIndex/index.html'  // 本地路径
+    : 'https://uoabiolab.github.io/GameIndex/';  // GitHub Pages 路径
+
+  window.location.href = mainPage;
 }
+
 </script>
 <style scoped>
 .game-container {

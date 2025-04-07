@@ -96,7 +96,9 @@ h2 {
 
 .stat-item {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* 靠左对齐 */
+  align-items: center;         /* 垂直居中 */
+  gap: 8px;                    /* 控制文字和数字之间的距离 */
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 5px;

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="menu-container">
     <h1>气球大师</h1>
     <div class="menu-buttons">
@@ -94,4 +94,4 @@ button:hover {
 .back-button:hover {
   background-color: #cc0000 !important;
 }
-</style> 
+</style>  -->

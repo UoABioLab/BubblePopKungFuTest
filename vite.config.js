@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
-  base: '/BubblePopKungFu/',
+  base: './',
   plugins: [vue()],
   server: {
     port: 9202,

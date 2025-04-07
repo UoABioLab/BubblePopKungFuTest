@@ -45,8 +45,8 @@ const isPopping = ref(false)
 // 根据side选择气球图片
 const balloonImage = computed(() => {
   return props.side === 'left' 
-    ? '/BubblePopKungFu/Assets/pink_balloon.png'
-    : '/BubblePopKungFu/Assets/green_balloon.png'
+    ? './Assets/pink_balloon.png'
+    : './Assets/green_balloon.png'
 })
 </script>
 <style scoped>
