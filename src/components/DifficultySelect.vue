@@ -200,7 +200,7 @@ const emit = defineEmits(['confirm', 'back'])
 
 const backToMain = () => {
 
-  window.location.href = 'https://uoabiolab.github.io/GameIndex/'
+  window.location.href = 'https://8.138.167.96/balancegame/'
 
 }
 
