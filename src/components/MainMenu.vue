@@ -25,7 +25,7 @@ defineEmits(['start', 'difficulty', 'scoreboard'])
 
 const backToMain = () => {
   console.log('Redirecting to main page...')
-  window.location.href = 'https://uoabiolab.github.io/GameIndex/'
+  window.location.href = 'https://8.138.167.96/balancegame/'
 }
 </script>
 
