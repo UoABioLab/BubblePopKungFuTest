@@ -649,7 +649,7 @@ const backToMain = () => {
   const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
   const mainPage = isLocal
     ? '/GameIndex/index.html'  // 本地路径
-    : 'https://uoabiolab.github.io/GameIndex/';  // GitHub Pages 路径
+    : 'https://8.138.167.96/balancegame/';  // GitHub Pages 路径
 
   window.location.href = mainPage;
 }
